@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HadeStudios — Sistemi & Script Roblox</title>
+  <meta name="description" content="HadeStudios: sviluppatore Roblox con 5 anni di esperienza. Sistemi e script premium per Roblox Studio con download automatico via Payhip/Lemon Squeezy." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{
+      /* Cambia questo percorso con la tua immagine nel repo (caricala in /assets) */
+      --bg-url: url('assets/hadestudios-hero.webp');
+      --accent:#ff1d1d;
+      --font-head:'Bebas Neue', sans-serif;
+      --font-body:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:var(--font-body); background:#000; color:#fff; }
+    /* HERO */
+    .hero{position:relative;min-height:100vh;background-image:var(--bg-url);background-size:cover;background-position:center}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.78));}
+    /* UI */
+    .glass{background:rgba(0,0,0,.6);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.06)}
+    .btn{background:var(--accent);color:#fff;padding:.68rem 1.2rem;border-radius:.65rem;font-weight:700;transform:scale(1);transition:transform .22s cubic-bezier(.2,.8,.2,1), filter .22s ease, box-shadow .22s ease}
+    .btn:hover{transform:scale(1.08);filter:brightness(1.12)}
+    .btn:active{transform:scale(0.98)}
+    .btn:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(255,29,29,.35)}
+    .link{border:1px solid rgba(255,255,255,.2);padding:.68rem 1.2rem;border-radius:.65rem;transform:scale(1);transition:transform .22s cubic-bezier(.2,.8,.2,1), background .22s ease, border-color .22s ease}
+    .link:hover{transform:scale(1.05);background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.3)}
+    .badge{display:inline-block;background:rgba(255,29,29,.15);color:#ff8f8f;border:1px solid rgba(255,29,29,.25);border-radius:.5rem;padding:.15rem .5rem;font-size:.75rem}
+    .card{transform:translateY(0) scale(1);transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,background .28s ease}
+    .card:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 16px 40px rgba(255,29,29,.12);background:rgba(0,0,0,.64)}
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+    /* Hamburger */
+    .hamb{width:28px;height:20px;position:relative}
+    .hamb span{position:absolute;left:0;width:100%;height:2px;background:#fff;transition:.22s}
+    .hamb span:nth-child(1){top:0}
+    .hamb span:nth-child(2){top:9px}
+    .hamb span:nth-child(3){bottom:0}
+    body.open .hamb span:nth-child(1){transform:translateY(9px) rotate(45deg)}
+    body.open .hamb span:nth-child(2){opacity:0}
+    body.open .hamb span:nth-child(3){transform:translateY(-9px) rotate(-45deg)}
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){ .btn,.link,.card,.reveal{transition:none!important} html{scroll-behavior:auto} }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-50">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-4">
+      <div class="glass rounded-2xl h-14 flex items-center justify-between px-4">
+        <a href="#home" class="flex items-center gap-3" aria-label="HadeStudios home">
+          <!-- Logo con icona minimal (H con corna) + wordmark -->
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 21V3m16 18V3M9.5 8.5v7m5-7v7" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M6 4c0-1 .8-2 2-2m8 2c0-1-.8-2-2-2" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <svg width="170" height="24" viewBox="0 0 340 48" fill="none" xmlns="http://www.w3.org/2000/svg" class="shrink-0">
+            <defs>
+              <linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ff4b4b"/><stop offset="100%" stop-color="#ff1d1d"/></linearGradient>
+            </defs>
+            <text x="0" y="35" font-family="var(--font-head)" font-size="36" letter-spacing="2" fill="#fff">HADE<tspan fill="url(#g)">STUDIOS</tspan></text>
+          </svg>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 font-semibold">
+          <a href="#home" class="hover:text-red-400">Home</a>
+          <a href="#shop" class="hover:text-red-400">Shop</a>
+          <a href="#faq" class="hover:text-red-400">FAQ</a>
+          <a href="#contatti" class="hover:text-red-400">Contatti</a>
+        </nav>
+        <button id="menuBtn" class="md:hidden hamb" aria-label="Apri menu"><span></span><span></span><span></span></button>
+        <a href="#shop" class="hidden md:inline-flex btn">Shop</a>
+      </div>
+    </div>
+    <!-- Banner promo con countdown -->
+    <div id="promo" class="mt-2 mx-auto max-w-7xl px-4">
+      <div class="glass rounded-2xl p-3 flex items-center justify-between text-sm">
+        <div class="flex items-center gap-2"><span class="badge">SALE</span><span>Fino al <strong>25% OFF</strong> su sistemi selezionati</span></div>
+        <div>Termina tra <span id="countdown" class="text-red-400 font-bold">--:--:--</span></div>
+      </div>
+    </div>
+    <!-- Mobile drawer -->
+    <div id="mobileNav" class="hidden md:hidden mt-2 mx-auto max-w-7xl px-4">
+      <div class="glass rounded-2xl p-4 flex flex-col gap-3 font-semibold">
+        <a href="#home" class="hover:text-red-400">Home</a>
+        <a href="#shop" class="hover:text-red-400">Shop</a>
+        <a href="#faq" class="hover:text-red-400">FAQ</a>
+        <a href="#contatti" class="hover:text-red-400">Contatti</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="home" class="hero flex items-center justify-center text-center">
+    <div class="relative z-10 max-w-3xl mx-auto px-4">
+      <div class="glass rounded-3xl p-8 md:p-10 reveal">
+        <span class="badge">Sviluppatore Roblox • 5 anni</span>
+        <h1 class="mt-2 text-5xl md:text-6xl" style="font-family:var(--font-head); letter-spacing:.02em;">Sistemi e Script <span style="color:var(--accent)">Premium</span></h1>
+        <p class="mt-3 text-lg text-gray-300">Funzionali, ottimizzati e pronti all'uso. Paghi e ricevi subito un'email con il link al download sicuro.</p>
+        <div class="mt-6 flex justify-center gap-3">
+          <a href="#shop" class="btn">Vai allo Shop</a>
+          <a href="#contatti" class="link">Contattami</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOP + FILTRI -->
+  <section id="shop" class="py-16 md:py-24 max-w-7xl mx-auto px-4">
+    <div class="flex items-end justify-between mb-6">
+      <div>
+        <h2 class="text-4xl" style="font-family:var(--font-head)">Shop</h2>
+        <p class="text-gray-400">Pagamenti sicuri • Download automatico via email</p>
+      </div>
+      <div class="flex gap-2 text-sm">
+        <button data-filter="all" class="link">Tutti</button>
+        <button data-filter="script" class="link">Script</button>
+        <button data-filter="systems" class="link">Systems</button>
+      </div>
+    </div>
+
+    <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+  </section>
+
+  <!-- FAQ compatta -->
+  <section id="faq" class="py-16 border-t border-white/10">
+    <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-3 gap-4">
+      <div class="md:col-span-1"><h3 class="text-3xl" style="font-family:var(--font-head)">FAQ</h3></div>
+      <div class="md:col-span-2 space-y-3">
+        <details class="glass p-4 rounded-xl reveal"><summary class="font-semibold cursor-pointer">Come ricevo il file?</summary><p class="mt-2 text-gray-300">Email automatica con link di download (Payhip o Lemon Squeezy). Il link può avere scadenza.</p></details>
+        <details class="glass p-4 rounded-xl reveal"><summary class="font-semibold cursor-pointer">Licenza</summary><p class="mt-2 text-gray-300">Uso commerciale per un progetto Roblox per acquisto. No redistribuzione. Contattami per multi‑progetto.</p></details>
+        <details class="glass p-4 rounded-xl reveal"><summary class="font-semibold cursor-pointer">Supporto</summary><p class="mt-2 text-gray-300">Supporto via email/Discord. Aggiornamenti minori inclusi.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI -->
+  <section id="contatti" class="py-16 text-center">
+    <h3 class="text-4xl" style="font-family:var(--font-head)">Hai richieste custom?</h3>
+    <p class="text-gray-400 mt-1">Commissioni private o integrazioni su misura per il tuo gioco.</p>
+    <div class="mt-5 flex items-center justify-center gap-3">
+      <a href="mailto:hello@hadestudios.dev" class="btn">Email</a>
+      <button id="copyEmail" class="link" data-email="hello@hadestudios.dev">Copia email</button>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-gray-400 border-t border-white/10">© <span id="year"></span> HadeStudios • Tutti i diritti riservati</footer>
+
+  <script>
+    // ===== Utilities =====
+    const $ = (s,ctx=document)=>ctx.querySelector(s);
+    const $$ = (s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
+    const fmtEUR = v => new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(v);
+
+    // ===== SHOP (static) =====
+    const PRODUCTS = [
+      { id:'inv', title:'Inventory Pro', subtitle:'UI drag & drop, hotbar', price:24.99, compareAtPrice:29.99, image:'https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1000&auto=format&fit=crop', paymentLink:'#', type:'systems' },
+      { id:'combat', title:'Combat Netcode', subtitle:'Combo + hitbox predittiva', price:22.00, compareAtPrice:29.00, image:'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1000&auto=format&fit=crop', paymentLink:'#', type:'systems' },
+      { id:'shop', title:'Shop Ultimate', subtitle:'Negozio multi‑valuta', price:19.90, image:'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=1000&auto=format&fit=crop', paymentLink:'#', type:'systems' },
+      { id:'toast', title:'Notifier Module', subtitle:'Toasts & alerts client/server', price:6.00, image:'https://images.unsplash.com/photo-1541560052-77ec1bbc09f7?q=80&w=1000&auto=format&fit=crop', paymentLink:'#', type:'script' },
+      { id:'ds', title:'DataStore Lite', subtitle:'Wrapper con retry/backoff', price:8.50, image:'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1000&auto=format&fit=crop', paymentLink:'#', type:'script' }
+    ];
+
+    const grid = document.getElementById('productsGrid');
+    function card(p){
+      const off = p.compareAtPrice ? `<div class='text-xs line-through text-gray-400'>${fmtEUR(p.compareAtPrice)}</div>` : '';
+      const badge = p.compareAtPrice ? `<span class='badge'>-${Math.round((1 - p.price/p.compareAtPrice)*100)}%</span>` : '';
+      return `
+      <article class="card glass rounded-2xl overflow-hidden reveal" data-type="${p.type}">
+        <img src="${p.image}" alt="${p.title}" class="h-44 w-full object-cover"/>
+        <div class="p-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl" style="font-family:var(--font-head)">${p.title}</h3>
+            <div class="text-right">${off}<span class="text-red-400 font-bold">${fmtEUR(p.price)}</span></div>
+          </div>
+          <p class="text-gray-400 text-sm">${p.subtitle||''}</p>
+          <div class="mt-3 flex gap-2 items-center">
+            <a href="${p.paymentLink}" target="_blank" class="btn">Acquista</a>
+            ${badge}
+            <button class="link" data-id="${p.id}" data-action="details">Dettagli</button>
+          </div>
+        </div>
+      </article>`
+    }
+
+    function render(filter='all'){
+      grid.innerHTML = PRODUCTS.filter(p=> filter==='all' ? true : p.type===filter).map(card).join('');
+      bindDetailButtons();
+      reveal();
+    }
+
+    // ===== Modale Dettagli =====
+    const modal = document.createElement('div');
+    modal.className = 'hidden fixed inset-0 z-50';
+    modal.innerHTML = `
+      <div class="absolute inset-0 bg-black/70" data-close></div>
+      <div class="relative mx-auto max-w-xl mt-20 glass rounded-2xl p-6">
+        <div class="flex justify-between items-start gap-4">
+          <div>
+            <h3 id="mTitle" class="text-2xl" style="font-family:var(--font-head)"></h3>
+            <p id="mSub" class="text-gray-400 mt-1"></p>
+          </div>
+          <button class="link" data-close>✕</button>
+        </div>
+        <img id="mImg" class="mt-4 w-full h-56 object-cover rounded-xl border border-white/10" alt="Anteprima prodotto" />
+        <div class="mt-5 flex items-center justify-between">
+          <span id="mPrice" class="text-red-400 font-bold text-xl"></span>
+          <a id="mBuy" href="#" target="_blank" class="btn">Acquista ora</a>
+        </div>
+      </div>`;
+    document.body.appendChild(modal);
+
+    function openModal(p){
+      $('#mTitle').textContent = p.title;
+      $('#mSub').textContent = p.subtitle||'';
+      $('#mImg').src = p.image;
+      $('#mPrice').textContent = fmtEUR(p.price);
+      $('#mBuy').href = p.paymentLink;
+      modal.classList.remove('hidden');
+      document.body.style.overflow='hidden';
+    }
+    function closeModal(){ modal.classList.add('hidden'); document.body.style.overflow=''; }
+    modal.addEventListener('click',e=>{ if(e.target.hasAttribute('data-close')) closeModal(); });
+
+    function bindDetailButtons(){
+      grid.querySelectorAll('[data-action="details"]').forEach(b=>{
+        b.addEventListener('click',()=>{
+          const p = PRODUCTS.find(x=>x.id===b.dataset.id); if(p) openModal(p);
+        })
+      })
+    }
+
+    // ===== Filtri =====
+    $$('[data-filter]').forEach(btn=>btn.addEventListener('click',()=>render(btn.dataset.filter)));
+
+    // ===== Reveal on scroll =====
+    function reveal(){
+      const obs = new IntersectionObserver(entries=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target);} })
+      },{threshold:.2});
+      $$('.reveal').forEach(el=>obs.observe(el));
+    }
+
+    // ===== Mobile nav =====
+    $('#menuBtn').addEventListener('click',()=>{
+      document.body.classList.toggle('open');
+      $('#mobileNav').classList.toggle('hidden');
+    });
+
+    // ===== Contatti: copia email =====
+    $('#copyEmail').addEventListener('click',()=>{
+      const mail = $('#copyEmail').dataset.email;
+      navigator.clipboard.writeText(mail).then(()=>{
+        $('#copyEmail').textContent = 'Copiata!';
+        setTimeout(()=>$('#copyEmail').textContent='Copia email',1200);
+      });
+    });
+
+    // ===== Countdown promo 48h =====
+    (function(){
+      const end = Date.now() + 48*60*60*1000;
+      const el = document.getElementById('countdown');
+      function tick(){
+        if(!el) return;
+        const t = Math.max(0, end - Date.now());
+        const h = String(Math.floor(t/3.6e6)).padStart(2,'0');
+        const m = String(Math.floor((t%3.6e6)/6e4)).padStart(2,'0');
+        const s = String(Math.floor((t%6e4)/1000)).padStart(2,'0');
+        el.textContent = `${h}:${m}:${s}`; if(t>0) setTimeout(tick,1000);
+      } tick();
+    })();
+
+    // ===== Init =====
+    render('all');
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
